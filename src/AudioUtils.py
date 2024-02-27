@@ -30,6 +30,10 @@ def remove_silence(signal):
 def ogg_to_audio(path):
     return AudioSegment.from_ogg(path)
 
+def fourier_transform(signal):
+    return librosa.stft(signal) #Fourier Transform
+    
+
 def mfcc_features(signal,sample_rate, num_mfcc):
     return np.mean(librosa.feature.mfcc(y=signal, sr=sample_rate, n_mfcc=num_mfcc).T,axis=0).tolist()
 
