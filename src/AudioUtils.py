@@ -35,13 +35,12 @@ def mfcc_features(signal,sample_rate, num_mfcc):
 
 def mel_spectogram_generator(audio_name,signal,sample_rate,augmentation,target_path):
     # Plot mel-spectrogram
-    N_FFT = 1024         
-    HOP_SIZE = 1024       
-    N_MELS = 128            
-    WIN_SIZE = 1024      
-    WINDOW_TYPE = 'hann' 
-    FEATURE = 'mel'      
-    FMIN = 0
+    N_FFT = 1024 #length of the FFT window         
+    HOP_SIZE = 1024  #number of samples between successive frames     
+    N_MELS = 128 #number of Mel bands to generate                 
+    FMIN = 0 #lowest frequency (in Hz)
+    # htk - use HTK formula instead of Slaney
+    # fmax - highest frequency (in Hz)
     S = librosa.feature.melspectrogram(y=signal,sr=sample_rate,
                                     n_fft=N_FFT,
                                     hop_length=HOP_SIZE, 
