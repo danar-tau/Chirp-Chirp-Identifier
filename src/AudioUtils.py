@@ -1,11 +1,10 @@
 import librosa
-import os
-import AudioSegment
+from pydub import AudioSegment
 
 
-def create_chunks(audio, filename):
+def create_chunks(audio, filename, output_dir):
     if len(audio) < 10000:
-        return "Audio too small"
+        return
 
     chunk_no = 0
     t1 = 0
@@ -17,7 +16,7 @@ def create_chunks(audio, filename):
 
         curr_chunk = audio[t1:t2]
         chunk_no += 1
-        curr_chunk.export(filename + '-' + str(chunk_no) + '.ogg', format="ogg")
+        curr_chunk.export(output_dir + '//' + filename + '-' + str(chunk_no) + '.ogg', format="ogg")
         t1, t2 = t2, t1
 
 
