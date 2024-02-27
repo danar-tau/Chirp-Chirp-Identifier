@@ -1,6 +1,8 @@
 import librosa
 import os
 import AudioSegment
+import np
+import matplotlib.pyplot as plt 
 
 
 def create_chunks(audio, filename):
@@ -28,3 +30,30 @@ def remove_silence(signal):
 def ogg_to_audio(path):
     return AudioSegment.from_ogg(path)
 
+def mfcc_features(signal,sample_rate, num_mfcc):
+    return np.mean(librosa.feature.mfcc(y=signal, sr=sample_rate, n_mfcc=num_mfcc).T,axis=0).tolist()
+
+def mel_spectogram_generator(audio_name,signal,sample_rate,augmentation,target_path):
+    # Plot mel-spectrogram
+    N_FFT = 1024         
+    HOP_SIZE = 1024       
+    N_MELS = 128            
+    WIN_SIZE = 1024      
+    WINDOW_TYPE = 'hann' 
+    FEATURE = 'mel'      
+    FMIN = 0
+    S = librosa.feature.melspectrogram(y=signal,sr=sample_rate,
+                                    n_fft=N_FFT,
+                                    hop_length=HOP_SIZE, 
+                                    n_mels=N_MELS, 
+                                    htk=True, 
+                                    fmin=FMIN, 
+                                    fmax=sample_rate/2) 
+
+    plt.figure(figsize=(10, 4))
+    librosa.display.specshow(librosa.power_to_db(S**2,ref=np.max), fmin=FMIN,y_axis='linear')
+    plt.axis('off')
+    plt.savefig(target_path + augmentation + audio_name[:-4] + '.png',bbox_inches='tight',transparent=True, pad_inches=0)
+    plt.clf()
+    plt.close("all")
+  
