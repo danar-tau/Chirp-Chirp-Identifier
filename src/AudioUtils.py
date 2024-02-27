@@ -34,7 +34,7 @@ def fourier_transform(signal):
     return librosa.stft(signal) #Fourier Transform
     
 
-def mfcc_features(signal,sample_rate, num_mfcc):
+def mfcc_features(signal,sample_rate, num_mfcc): #n_mfcc - number of MFCCs to return
     return np.mean(librosa.feature.mfcc(y=signal, sr=sample_rate, n_mfcc=num_mfcc).T,axis=0).tolist()
 
 def mel_spectogram_generator(audio_name,signal,sample_rate,augmentation,target_path):
