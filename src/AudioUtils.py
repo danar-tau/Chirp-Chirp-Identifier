@@ -1,5 +1,7 @@
 import librosa
 from pydub import AudioSegment
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def create_chunks(audio, filename, output_dir):
@@ -27,3 +29,33 @@ def remove_silence(signal):
 def ogg_to_audio(path):
     return AudioSegment.from_ogg(path)
 
+def fourier_transform(signal):
+    return librosa.stft(signal) #Fourier Transform
+    
+
+def mfcc_features(signal,sample_rate, num_mfcc): #n_mfcc - number of MFCCs to return
+    return np.mean(librosa.feature.mfcc(y=signal, sr=sample_rate, n_mfcc=num_mfcc).T,axis=0).tolist()
+
+def mel_spectogram_generator(audio_name,signal,sample_rate,augmentation,target_path):
+    # Plot mel-spectrogram
+    N_FFT = 1024 #length of the FFT window         
+    HOP_SIZE = 1024  #number of samples between successive frames     
+    N_MELS = 128 #number of Mel bands to generate                 
+    FMIN = 0 #lowest frequency (in Hz)
+    # htk - use HTK formula instead of Slaney
+    # fmax - highest frequency (in Hz)
+    S = librosa.feature.melspectrogram(y=signal,sr=sample_rate,
+                                    n_fft=N_FFT,
+                                    hop_length=HOP_SIZE, 
+                                    n_mels=N_MELS, 
+                                    htk=True, 
+                                    fmin=FMIN, 
+                                    fmax=sample_rate/2) 
+
+    plt.figure(figsize=(10, 4))
+    librosa.display.specshow(librosa.power_to_db(S**2,ref=np.max), fmin=FMIN,y_axis='linear')
+    plt.axis('off')
+    plt.savefig(target_path + augmentation + audio_name[:-4] + '.png',bbox_inches='tight',transparent=True, pad_inches=0)
+    plt.clf()
+    plt.close("all")
+  
