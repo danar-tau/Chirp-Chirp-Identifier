@@ -6,9 +6,9 @@ Our team worked in the non-competitive track of the challenge “BirdCLEF 2022�
 This is a formidable task as even obtaining recordings of these rare birds is hard (for example there are only a few thousand individuals remaining globally of the Nene geese, one of the birds included in this challenge).
 We needed to solve a classification problem, with a big amount of classes. The train data has 152 different classes, from which only 21 birds are used for scoring. For each recording in the test dataset we needed to determine whether or not the bird in question called during the 5 second window of that specific recording.
 This is code competition, which has some important characteristics to remember - 
-We submit our notebook which must run offline and produce the submission csv in kaggle’s working directory. Its runtime cannot surpass 9 hours.
-We do not have access to the full logs of each run.
-We do not have access to the test dataset. We have one test recording as an example, but the full test dataset can be accessed only during runtime of a submission.
+1. We submit our notebook which must run offline and produce the submission csv in kaggle’s working directory. Its runtime cannot surpass 9 hours.
+2. We do not have access to the full logs of each run.
+3. We do not have access to the test dataset. We have one test recording as an example, but the full test dataset can be accessed only during runtime of a submission.
 
 ## Explaination on the directories 
 ### Src
@@ -19,5 +19,5 @@ We do not have access to the test dataset. We have one test recording as an exam
 
 ### Models 
 
-All the checkpoint weights we used in our inference.
+1. All the checkpoint weights we used in our inference.
 
